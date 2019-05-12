@@ -218,7 +218,7 @@
 
 <h1 id="what-is-aleph">What is aleph</h1>
 
-<p>Aleph is a fully asynchronous opensource sample dissection pipeline built on top of <a href="http://www.celeryproject.org/">celery</a>, which makes it easily scalable and reliable. Also is built with abstraction and microservices in the heart. The platform is easily extensible through its components system.</p>
+<p>Aleph is a fully asynchronous opensource sample dissection pipeline written in Python 3, built on top of <a href="http://www.celeryproject.org/">Celery</a> - used by companies such as Instagram - which makes it scalable and reliable. With abstraction and microservices in the heart, the platform is easily extensible through its components system.</p>
 
 <p>Aleph is made with threat intelligence researchers and malware reverse engineers in mind!</p>
 
@@ -226,27 +226,29 @@
 
 <h1 id="what-can-it-do">What can it do?</h1>
 
-<p>Aleph can extract information from virtually any file type (given a processor for this file type exists, otherwise generic processors will be run) into beautiful JSON data that can be queried via <a href="https://www.elastic.co/guide/en/kibana/current/lucene-query.html">lucene query syntax</a> when used with the default <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a> backend.</p>
+<p>Aleph can extract information from virtually any file type (given a processor for that file type exists) into beautiful JSON data that can be queried via <a href="https://www.elastic.co/guide/en/kibana/current/lucene-query.html">Lucene query syntax</a> when used with the default <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a> backend.</p>
 
 <hr />
 
 <h1 id="how-does-it-works">How does it works?</h1>
 
-<p>Aleph comes with several built-in collectors (local folder, Amazon S3 buckets, IMAP email accounts etc) on which the samples are collected and injected into the pipeline, where is dispatched to the processor workers which will apply the processors for that specific file type. All extracted data is sent to the backend datastore.</p>
+<p>Aleph comes with several built-in collectors (local folder, Amazon S3 buckets, IMAP &amp; POP email accounts etc) that dispatches the samples to the workers which will apply the processors for that specific file type which will carve the information out.</p>
+
+<p>All extracted data is sent to the backend datastore. Later, analyzer components can run intelligence analysis on the combined output of all processors.</p>
 
 <hr />
 
 <h1 id="how-well-does-it-works">How well does it works?</h1>
 
-<p>Celery provides the management and communication of workers in the system. Celery also supports a number of messaging backends (although the preferred method is using <a href="https://www.rabbitmq.com/">RabbitMQ</a>  The whole system is asynchronous to be able to fully use Celery&rsquo;s potential.</p>
-
-<p>Aleph divides its tasks into specific message queues, meaning you can specialize your workers and put your computational power where is required.</p>
+<p>The workers in the system execute asynchronous tasks, enabling multiple parallel Aleph instances working together and idependently at the same time. All tasks are divided into specific message queues, meaning you can specialize your workers and put your computational power where is required.</p>
 
 <hr />
 
-<h1 id="is-aleph-fault-tolerant">Is aleph fault-tolerant?</h1>
+<h1 id="how-aleph-scales-and-handle-failures">How aleph scales and handle failures?</h1>
 
-<p>All parts of a standard Aleph configuration are scalable. You can grow your Aleph deployment wherever the bottleneck is: workers, message queues, sample storage and information storage. Any part of your stack can fail without you losing <strong>any</strong> data.</p>
+<p>All parts of a standard Aleph configuration (Aleph itself, <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a> and <a href="https://www.rabbitmq.com/">RabbitMQ</a>) are scalable. You can grow your Aleph deployment wherever your bottleneck is - workers, message queues, sample storage and information storage - giving you a much more efficient use of your infrastructure.</p>
+
+<p>With all moving parts being clusterable, any part of your stack can fail without you losing <strong><strong>any</strong></strong> data.</p>
 
     </div>
     <div class="col-md-12 mt-5">
